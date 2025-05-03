@@ -1,12 +1,16 @@
-from flask import Flask,request, jsonify
+from flask import Flask,request, jsonify, render_template
 from flask_cors import CORS
 from db import get_db, close_db, init_db
 from config import OCCUPANCY_THRSHOLD
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
 app.teardown_appcontext(close_db)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.before_request
 def setup():
@@ -69,4 +73,4 @@ def reset_occupancy():
     return jsonify({"message": "Occupancy count reset"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=8000)
