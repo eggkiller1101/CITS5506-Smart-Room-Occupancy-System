@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smart Room Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h1>SmartRoom</h1>
+      <div class="nav-item active" data-target="dashboard">📊 Dashboard</div>
+      <div class="nav-item" data-target="history">🕒 History</div>
+      <div class="nav-item" data-target="about">ℹ️ About</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Dashboard -->
+      <div id="dashboard" class="page-section">
+        <div class="count-display">
+          Current Occupancy: <span id="count">--</span>
+        </div>
+        <div class="alert" id="alert" style="display: none">
+          ⚠️ Room is Overcrowded!
+        </div>
+        <div class="sub-counts">
+          <div class="entry-count">
+            🚪 Entries Today: <span id="entryCount">--</span>
+          </div>
+          <div class="exit-count">
+            🚶‍♂️ Exits Today: <span id="exitCount">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div id="history" class="page-section" style="display: none">
+        <div class="section-title">Occupancy Trend (Last 24 Hours)</div>
+        <div class="chart-container">
+          <canvas id="occupancyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div id="about" class="page-section" style="display: none">
+        <div class="section-title">About This Project</div>
+        <div class="about">
+          <p>
+            This system counts people in real-time using mmWave sensors and
+            displays occupancy data via a live dashboard. It triggers alerts
+            when overcrowding occurs and stores historical trends.
+          </p>
+          <p>Team: Group 21 | Project: Smart Room Occupancy Counter</p>
+        </div>
+      </div>
+    </div>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+  </body>
+</html>
