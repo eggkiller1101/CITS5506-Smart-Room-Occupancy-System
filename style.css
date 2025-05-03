@@ -1,0 +1,113 @@
+/* Reset & Basics */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #2c3e50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar h1 {
+  font-size: 1.4em;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.nav-item {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav-item:hover {
+  color: #18bc9c;
+}
+
+.nav-item.active {
+  color: #18bc9c;
+  font-weight: bold;
+}
+
+/* Main content container */
+.main {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* Sections (Dashboard / History / About) */
+.page-section {
+  display: block;
+}
+
+/* Dashboard section */
+.count-display {
+  font-size: 48px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.alert {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* History chart section */
+.chart-container {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 800px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+/* About section */
+.section-title {
+  margin-top: 40px;
+  font-size: 1.3em;
+  color: #2c3e50;
+}
+
+.about {
+  margin-top: 20px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.sub-counts {
+  margin-top: 30px;
+  display: flex;
+  gap: 40px;
+  font-size: 20px;
+  color: #2c3e50;
+}
+
+.sub-counts div {
+  background: #ecf0f1;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
