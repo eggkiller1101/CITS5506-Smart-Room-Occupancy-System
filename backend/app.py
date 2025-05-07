@@ -52,7 +52,7 @@ def alert_status():
     last = db.execute('SELECT resulting_count FROM occupancy ORDER BY id DESC LIMIT 1').fetchone()
     count = last['resulting_count'] if last else 0
     return jsonify({
-        "overcrowded": count >= OCCUPANCY_THRESHOLD,
+        "overcrowded": count >= 5,
         "current_count": count
     })
 
