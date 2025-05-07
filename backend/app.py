@@ -20,22 +20,39 @@ def setup():
 @app.route('/api/occupancy/update', methods=['POST'])
 def update_occupancy():
     data = request.get_json()
-    timestamp = data['timestamp']
-    delta = data['delta']
-    door = data['door']
+   # Extract required fields from the request body
+    timestamp = data.get('timestamp')
+    delta = data.get('delta')
+    event_type = data.get('event_type')
+    sensor_trace = data.get('sensor_trace')
+    validated_by = data.get('validated_by')
+
+    # Validate required fields
+    if None in (timestamp, delta, event_type, sensor_trace, validated_by):
+        return jsonify({"error": "Missing required fields"}), 400
 
     db = get_db()
-    last = db.execute('SELECT resulting_count FROM occupancy ORDER BY id DESC LIMIT 1').fetchone()
+
+    # Get the current count from the latest entry
+    last = db.execute(
+        'SELECT resulting_count FROM occupancy ORDER BY id DESC LIMIT 1'
+    ).fetchone()
     current = last['resulting_count'] if last else 0
     new_count = current + delta
 
+    # Insert the new event into the database
     db.execute(
-        'INSERT INTO occupancy (timestamp, delta, resulting_count, door) VALUES (?, ?, ?, ?)',
-        (timestamp, delta, new_count, door)
+        '''INSERT INTO occupancy 
+           (timestamp, delta, resulting_count, event_type, sensor_trace, validated_by) 
+           VALUES (?, ?, ?, ?, ?, ?)''',
+        (timestamp, delta, new_count, event_type, sensor_trace, validated_by)
     )
     db.commit()
 
-    return jsonify({"message": "Occupancy updated", "current_count": new_count}), 200
+    return jsonify({
+        "message": "Occupancy updated",
+        "current_count": new_count
+    }), 200
 
 # GET /api/occupancy/current
 @app.route('/api/occupancy/current')
