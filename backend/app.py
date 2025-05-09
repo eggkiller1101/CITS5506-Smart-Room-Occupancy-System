@@ -89,5 +89,5 @@ def reset_occupancy():
     db.commit()
     return jsonify({"message": "Occupancy count reset"}), 200
 
-if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+# if __name__ == '__main__':
+#     app.run(debug=True, port=8000)
