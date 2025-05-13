@@ -27,7 +27,14 @@ function Settings() {
           <TextField
             type="number"
             value={threshold}
-            onChange={(e) => setThreshold(Number(e.target.value))}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === '') {
+                setThreshold('');
+              } else if (/^\d+$/.test(val)) {
+                setThreshold(Number(val));
+              }
+            }}
             label="Max People"
             fullWidth
           />
