@@ -1,5 +1,17 @@
-# backend/.gitignore
-venv/
-__pycache__/
-*.pyc
-instance/
+# === Frontend (React + Vite) ===
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# === Backend (Flask + Python) ===
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/instance/
+backend/*.db
+
+# === General (system, editor, etc.) ===
+.DS_Store
+.vscode/
+*.log
+.env
