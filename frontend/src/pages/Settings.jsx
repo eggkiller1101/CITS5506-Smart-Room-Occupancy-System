@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { Typography, Box, Paper, TextField, Button } from '@mui/material';
 
 function Settings() {
-  const [threshold, setThreshold] = useState(30);
+  const [threshold, setThreshold] = useState(0);
 
   const handleSave = () => {
     alert(`New threshold saved: ${threshold}`);
   };
 
   const handleReset = () => {
+    setThreshold(0);
     alert('Occupancy data reset');
   };
 
