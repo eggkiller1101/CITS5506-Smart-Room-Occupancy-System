@@ -131,5 +131,17 @@ def update_threshold():
     except Exception as e:
         return jsonify({"error": "Invalid threshold"}), 400
 
+# GET /api/occupancy/today
+@app.route('/api/occupancy/today')
+def get_today_stats():
+    db = get_db()
+    entries = db.execute(
+        "SELECT COUNT(*) as total FROM occupancy WHERE event_type='entry' AND DATE(timestamp)=DATE('now','localtime')"
+    ).fetchone()['total']
+    exits = db.execute(
+        "SELECT COUNT(*) as total FROM occupancy WHERE event_type='exit' AND DATE(timestamp)=DATE('now','localtime')"
+    ).fetchone()['total']
+    return jsonify({"entries": entries, "exits": exits})
+
 if __name__ == '__main__':
     app.run(debug=True, port=8001)
