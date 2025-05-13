@@ -1,8 +1,21 @@
 // src/pages/Dashboard.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Paper, Box, Grid } from '@mui/material';
 
 function Dashboard() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch('http://localhost:8001/api/occupancy/current')
+        .then((res) => res.json())
+        .then((data) => setCount(data.current_count))
+        .catch((err) => console.error('Failed to fetch occupancy:', err));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -15,7 +28,7 @@ function Dashboard() {
       >
         <Typography variant="h6">Current Occupancy</Typography>
         <Typography variant="h2" color="primary">
-          12
+          {count}
         </Typography>
       </Paper>
 
