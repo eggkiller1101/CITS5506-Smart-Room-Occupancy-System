@@ -6,7 +6,21 @@ function Settings() {
   const [threshold, setThreshold] = useState(0);
 
   const handleSave = () => {
-    alert(`New threshold saved: ${threshold}`);
+    fetch('http://localhost:8001/api/config/threshold', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ threshold }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(`New threshold saved: ${data.threshold}`);
+      })
+      .catch((err) => {
+        console.error('Error updating threshold:', err);
+        alert('Failed to save threshold');
+      });
   };
 
   const handleReset = () => {
