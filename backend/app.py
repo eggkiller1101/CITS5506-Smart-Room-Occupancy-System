@@ -17,25 +17,31 @@ def before_first_request():
 # POST /api/occupancy/update
 @app.route('/api/occupancy/update', methods=['POST'])
 def update_occupancy():
-    data = request.get_json()
-    timestamp = data.get('timestamp')              # e.g., "2025-05-13T15:23:00Z"
-    delta = data.get('delta')                      # +1 or -1
-    current_count = data.get('current_count')      # result after delta applied
-    event_type = data.get('event_type')            # 'entry' or 'exit'
-    sensor_trace = data.get('sensor_trace')        # e.g., "S4->S3"
-    validated_by = data.get('validated_by')        # e.g., "S1" or "S2"
+    try:
+        data = request.get_json()
+        print("received data:", data)  # Debugging line
+        timestamp = data.get('timestamp')
+        delta = data.get('delta')
+        current_count = data.get('current_count')
+        event_type = data.get('event_type')
+        sensor_trace = data.get('sensor_trace')
+        validated_by = data.get('validated_by')
 
-    db = get_db()
-    db.execute(
-        '''INSERT INTO occupancy (
-            timestamp, delta, resulting_count,
-            event_type, sensor_trace, validated_by
-        ) VALUES (?, ?, ?, ?, ?, ?)''',
-        (timestamp, delta, current_count, event_type, sensor_trace, validated_by)
-    )
-    db.commit()
+        db = get_db()
+        db.execute(
+            '''INSERT INTO occupancy (
+                timestamp, delta, resulting_count,
+                event_type, sensor_trace, validated_by
+            ) VALUES (?, ?, ?, ?, ?, ?)''',
+            (timestamp, delta, current_count, event_type, sensor_trace, validated_by)
+        )
+        db.commit()
 
-    return jsonify({"status": "success"}), 200
+        return jsonify({"status": "success"}), 200
+
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 # GET /api/occupancy/current
 @app.route('/api/occupancy/current', methods=['GET'])
@@ -131,15 +137,12 @@ def update_threshold():
     except Exception as e:
         return jsonify({"error": "Invalid threshold"}), 400
 
-# GET /api/occupancy/today
-@app.route('/api/occupancy/today')
-def get_today_stats():
+# GET /api/occupancy/status
+@app.route('/api/occupancy/status', methods=['GET'])
+def get_status():
     db = get_db()
-    entries = db.execute(
-        "SELECT COUNT(*) as total FROM occupancy WHERE event_type='entry' AND DATE(timestamp)=DATE('now','localtime')"
-    ).fetchone()['total']
-    exits = db.execute(
-        "SELECT COUNT(*) as total FROM occupancy WHERE event_type='exit' AND DATE(timestamp)=DATE('now','localtime')"
-    ).fetchone()['total']
-    return jsonify({"entries": entries, "exits": exits})
+    row = db.execute('SELECT resulting_count FROM occupancy ORDER BY id DESC LIMIT 1').fetchone()
+    current_count = row['resulting_count'] if row else 0
+    status = "OK" if current_count < CURRENT_THRESHOLD else "Full"
+    return jsonify({"status": status, "current_count": current_count})
 
