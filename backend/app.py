@@ -74,7 +74,7 @@ def get_history():
     to_ts = request.args.get('to')
 
     db = get_db()
-    query = 'SELECT timestamp, delta, resulting_count, door FROM occupancy WHERE 1=1'
+    query = 'SELECT timestamp, delta, resulting_count FROM occupancy WHERE 1=1'
     params = []
 
     if from_ts:
@@ -91,8 +91,7 @@ def get_history():
         {
             "timestamp": row["timestamp"],
             "delta": row["delta"],
-            "resulting_count": row["resulting_count"],
-            "door": row["door"]
+            "resulting_count": row["resulting_count"]
         } for row in rows
     ]
 
