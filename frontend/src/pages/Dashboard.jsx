@@ -1,30 +1,27 @@
 // src/pages/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { Typography, Paper, Box, Grid } from '@mui/material';
+import { Typography, Paper, Box } from '@mui/material';
 
 function Dashboard() {
   const [count, setCount] = useState(0);
-  const [entries, setEntries] = useState(0);
-  const [exits, setExits] = useState(0);
+  const [status, setStatus] = useState('OK');
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://localhost:8001/api/occupancy/current')
-        .then((res) => res.json())
-        .then((data) => setCount(data.current_count))
-        .catch((err) => console.error('Failed to fetch occupancy:', err));
-
-      fetch('http://localhost:8001/api/occupancy/today')
+      fetch('http://localhost:8001/api/occupancy/status')
         .then((res) => res.json())
         .then((data) => {
-          setEntries(data.entries);
-          setExits(data.exits);
+          setCount(data.current_count);
+          setStatus(data.status);
         })
-        .catch((err) => console.error('Failed to fetch today stats:', err));
+        .catch((err) => console.error('Failed to fetch status:', err));
     }, 2000);
 
     return () => clearInterval(interval);
   }, []);
+
+  const statusColor = status === 'OK' ? '#2ecc71' : '#e74c3c'; // 绿 or 红
+  const statusGlow = status === 'OK' ? '0 0 10px #2ecc71' : '0 0 15px #e74c3c';
 
   return (
     <Box>
@@ -40,22 +37,19 @@ function Dashboard() {
         <Typography variant="h2" color="primary">
           {count}
         </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            mt: 2,
+            fontWeight: 'bold',
+            color: statusColor,
+            textShadow: statusGlow,
+            transition: 'all 0.3s ease-in-out',
+          }}
+        >
+          Status: {status}
+        </Typography>
       </Paper>
-
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Paper sx={{ p: 3, textAlign: 'center', borderRadius: 2 }}>
-            <Typography variant="subtitle1">Entries Today</Typography>
-            <Typography variant="h4">{entries}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper sx={{ p: 3, textAlign: 'center', borderRadius: 2 }}>
-            <Typography variant="subtitle1">Exits Today</Typography>
-            <Typography variant="h4">{exits}</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
     </Box>
   );
 }
