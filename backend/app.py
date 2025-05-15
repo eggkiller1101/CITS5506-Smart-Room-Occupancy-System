@@ -22,7 +22,7 @@ def update_occupancy():
         print("received data:", data)  # Debugging line
         timestamp = data.get('timestamp')
         delta = data.get('delta')
-        current_count = data.get('current_count')
+        resulting_count = data.get('resulting_count')
         event_type = data.get('event_type')
         sensor_trace = data.get('sensor_trace')
         validated_by = data.get('validated_by')
@@ -33,7 +33,7 @@ def update_occupancy():
                 timestamp, delta, resulting_count,
                 event_type, sensor_trace, validated_by
             ) VALUES (?, ?, ?, ?, ?, ?)''',
-            (timestamp, delta, current_count, event_type, sensor_trace, validated_by)
+            (timestamp, delta, resulting_count, event_type, sensor_trace, validated_by)
         )
         db.commit()
 
