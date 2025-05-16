@@ -17,14 +17,31 @@ Raspberry Pi performs the following tasks:
 
 ## Web Application
 
-We use Flask + vanilla HTML, CSS, Javascript to perform following tasks:
+We use Flask + React to perform following tasks:
 
 - User dashboard that will display the real-time occupancy counting
-- Display history data in diagram format
+- Display history data in diagram format (For service who has local database)
 
-## How to run the web server
+## How to Run the Frontend Page
 
-Make sure you are in the correct directory ./backend, all of the commands should be run in this directory.
+To run the frontend page, follow these steps:
+
+1. Navigate to the frontend directory:
+
+`$ cd frontend`
+
+2. Install dependencies:
+
+`$ npm install`
+
+3. Start the development server:
+   
+`$ npm run dev`
+   
+
+4. Open your browser and go to `http://localhost:3000` to view the frontend page.
+
+## How to Run the Backend Server
 
 ### Virtual Environment Setup
 
@@ -47,6 +64,7 @@ On Windows systems:
 `$ venv\Scripts\activate`
 
 **3. Install Requirements**
+
 The `requirements.txt` file contains all the Python dependencies that the appliaction requires to run. These can be downloaded and installed with:
 
 `$ pip install -r requirements.txt`
@@ -54,6 +72,7 @@ The `requirements.txt` file contains all the Python dependencies that the applia
 NOTE: Your system may have `pip3` aliased as something other than pip
 
 **4. Install Library to run the project**
+
 Since we are starting the Flask project by reading the .flaskenv file, it is necessary to install a python library specifically used to read environment variables from .env or .flaskenv files
 
 `$ pip install python-dotenv`
@@ -66,4 +85,4 @@ To start the server and open pages in browser, the follow comomand should be exe
 
 `$ flask run`
 
-The application should now run be at http://127.0.0.1:8000/. If you want to modify the port number, you can modify it in `.flaskenv`
+
