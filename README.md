@@ -22,6 +22,71 @@ We use Flask + React to perform following tasks:
 - User dashboard that will display the real-time occupancy counting
 - Display history data in diagram format (For service who has local database)
 
+## How to Connect Raspberry Pi to Flask Backend
+
+To ensure that your Raspberry Pi can communicate with the Flask backend running on your computer, they must be on the same local network.
+
+1. Connect Both Devices to the Same Wi-Fi
+
+- Computer (running Flask): Connect to your Wi-Fi or mobile hotspot
+  
+- Raspberry Pi: Also connect to the same Wi-Fi or hotspot using:
+  
+  - GUI: via Raspberry Pi desktop -> Wi-Fi icon -> select the same network.
+    
+  - Terminal:
+  `$ sudo raspi-config`
+   
+2. Find Your Computer's Local IP Address
+
+On your computer (Mac or Linux), run:
+
+`$ ifconfig`
+
+Look under en0 (Wi-Fi adapter) for something like:
+
+`$ inet <local IP address>`
+
+This is your local IP address. This is the address the Pi will use to reach your Flask server.
+
+On Windows:
+
+`$ ipconfig`
+
+Look for IPv4 address.
+
+3. Update the Pi's Code with the Correct IP
+
+In your Raspberry Pi Python script, update the URLs:
+
+```
+SERVER_URL = "http://<local IP address>:8001/api/config/threshold"
+UPLOAD_URL = "http://<local IP address>:8001/api/occupancy/update"
+```
+4. Start the Flask Backend on Your Computer
+
+In your IoT folder:
+
+`$ flask run`
+
+Make sure it says:
+
+`$ Running on http://0.0.0.0:8001`
+
+This means it's listening to all incoming requests, not just localhost.
+
+If not, manually run:
+
+`$ flask run --host=0.0.0.0 --port=8001`
+
+5. Verify Connection
+
+On Raspberry Pi:
+
+`$ ping `
+
+Should return replies if the Pi can reach your computer.
+
 ## How to Run the Frontend Page
 
 To run the frontend page, follow these steps:
@@ -38,8 +103,7 @@ To run the frontend page, follow these steps:
    
 `$ npm run dev`
    
-
-4. Open your browser and go to `http://localhost:3000` to view the frontend page.
+4. Open your browser and go to `http://localhost:8001` to view the frontend page.
 
 ## How to Run the Backend Server
 
