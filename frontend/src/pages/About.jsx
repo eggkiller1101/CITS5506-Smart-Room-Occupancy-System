@@ -10,11 +10,11 @@ function About() {
       </Typography>
 
       <Paper sx={{ p: 4, borderRadius: 2 }}>
-        <Typography paragraph>
+        <Typography>
           This Smart Room Occupancy Counter uses mmWave sensors to track the
           number of people entering and leaving a room in real time.
         </Typography>
-        <Typography paragraph>
+        <Typography>
           The system is built using a Raspberry Pi, and data is displayed live
           on a web dashboard. Alerts are triggered when overcrowding is
           detected.
