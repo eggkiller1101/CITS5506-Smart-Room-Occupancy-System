@@ -87,6 +87,8 @@ On Raspberry Pi:
 
 Should return replies if the Pi can reach your computer.
 
+NOTE: Turn off firewall or allow Flask through your firewall (especially on macOS).
+
 ## How to Run the Frontend Page
 
 To run the frontend page, follow these steps:
