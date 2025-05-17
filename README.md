@@ -14,6 +14,7 @@ Raspberry Pi performs the following tasks:
 - Process logic of counting occupancy
 - Controls the red LED on/off
 - Controls the buzzer on/off
+- Controls the display on LCD
 
 ## Web Application
 
