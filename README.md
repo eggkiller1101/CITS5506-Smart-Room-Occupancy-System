@@ -17,10 +17,10 @@ Raspberry Pi performs the following tasks:
 
 ## Web Application
 
-We use Flask + React to perform following tasks:
+We use React(front-end) + Flask(back-end) to perform following tasks:
 
 - User dashboard that will display the real-time occupancy counting and status
-- Display history data in diagram format (For service who has local database)
+- Display history data in diagram format (For those who has local database)
 - One-click export history data in .csv file
 - Use the front-end GUI to dynamically adjust the threshold
 
