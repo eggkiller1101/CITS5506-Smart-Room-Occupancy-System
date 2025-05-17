@@ -20,7 +20,7 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const statusColor = status === 'OK' ? '#2ecc71' : '#e74c3c'; // 绿 or 红
+  const statusColor = status === 'OK' ? '#2ecc71' : '#e74c3c'; // green or red to identify status of room occupancy
   const statusGlow = status === 'OK' ? '0 0 10px #2ecc71' : '0 0 15px #e74c3c';
 
   return (
