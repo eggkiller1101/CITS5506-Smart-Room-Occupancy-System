@@ -2,25 +2,27 @@
 
 This project is for CITS5506 Project from Semester 1, 2025.
 
-The project is building the smart room occupancy counter. This projec includes two different components
+The project is building the smart room occupancy counter. This projec includes two different components:
 
-- Raspberry Pi
+- Raspberry Pi and other hardwares
 - Web application
 
 ## Raspberry Pi
 
 Raspberry Pi performs the following tasks:
 
+- Process logic of counting occupancy
 - Controls the red LED on/off
 - Controls the buzzer on/off
-- Process logic of counting occupancy
 
 ## Web Application
 
 We use Flask + React to perform following tasks:
 
-- User dashboard that will display the real-time occupancy counting
+- User dashboard that will display the real-time occupancy counting and status
 - Display history data in diagram format (For service who has local database)
+- One-click export history data in .csv file
+- Use the front-end GUI to dynamically adjust the threshold
 
 ## How to Connect Raspberry Pi to Flask Backend
 
