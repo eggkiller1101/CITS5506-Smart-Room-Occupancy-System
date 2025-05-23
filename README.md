@@ -1,4 +1,4 @@
-# CITS5506-IoT-Project
+# Smart Room Occupancy System User Guide
 
 This project is for CITS5506 Project from Semester 1, 2025.
 
